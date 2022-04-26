@@ -46,3 +46,7 @@ enum PublisherCompletion {
     case finished
     case failure(Error)
 }
+
+#if swift(>=5.6)
+extension DataPublisher: @unchecked Sendable {}
+#endif

@@ -3,6 +3,7 @@
 // Copyright (c) 2015-2022 Alexander Grebenyuk (github.com/kean).
 
 import Foundation
+import UIKit
 
 /// A uniform type identifier (UTI).
 public struct AssetType: ExpressibleByStringLiteral, Hashable {
@@ -88,3 +89,7 @@ public extension AssetType {
         return nil
     }
 }
+
+#if swift(>=5.6)
+extension AssetType: Sendable {}
+#endif

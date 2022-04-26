@@ -2,11 +2,11 @@
 //
 // Copyright (c) 2015-2022 Alexander Grebenyuk (github.com/kean).
 
+import Foundation
+
 #if !os(watchOS)
 import AVKit
 #endif
-
-import Foundation
 
 #if !os(macOS)
 import UIKit.UIImage
@@ -33,10 +33,6 @@ public struct ImageResponse {
     /// HTTP cache.
     public let urlResponse: URLResponse?
 
-    /// Contains a cache type in case the image was returned from one of the
-    /// pipeline caches (not including any of the HTTP caches if enabled).
-    public let cacheType: CacheType?
-
     /// Initializes the response with the given image.
     public init(container: ImageContainer, urlResponse: URLResponse? = nil, cacheType: CacheType? = nil) {
         self.container = container
@@ -52,6 +48,8 @@ public struct ImageResponse {
             return ImageResponse(container: output, urlResponse: urlResponse, cacheType: cacheType)
         }
     }
+
+    public let cacheType: CacheType?
 
     /// A cache type.
     public enum CacheType {
@@ -142,3 +140,8 @@ public struct ImageContainer {
         public static let scanNumberKey: UserInfoKey = "com.github/kean/nuke/scan-number"
     }
 }
+
+#if swift(>=5.6)
+extension ImageResponse.CacheType: Sendable {}
+extension ImageContainer.UserInfoKey: Sendable {}
+#endif
